@@ -2,11 +2,13 @@ package binaryTree;
 
 public class Main {
     public static void main(String[] args) {
-        AvlTree<Integer> tree = new AvlTree<>();
+        RedBlackTree<Integer> rbTree = new RedBlackTree<>();
 
-        tree.insert(5);
-        tree.insert(7);
-        tree.insert(6);
+        rbTree.insert(5);
+        rbTree.insert(6);
+        rbTree.insert(7);
+        rbTree.insert(8);
+
         System.out.println("");
     }
 }
