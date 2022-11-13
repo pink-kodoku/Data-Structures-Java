@@ -1,71 +1,14 @@
-package binaryTree;
+package redBlackTree;
 
-public class RedBlackTree<T extends Comparable<T>> {
-    private class Node<E> {
-        private E value;
-        private Node<E> left;
-        private Node<E> right;
-        private Node<E> parent;
-        private boolean color = true;
-
-        public Node(E value, Node<E> parent) {
-            this.value = value;
-            this.parent = parent;
-        }
-
-        private boolean isRed() {
-            return color;
-        }
-
-        private boolean isBlack() {
-            return !color;
-        }
-
-        private void makeRed() {
-            color = true;
-        }
-
-        private void makeBlack() {
-            color = false;
-        }
-
-        private void flipColor() {
-            color = !color;
-        }
-
-        private boolean isLeftChild() {
-            return this == parent.left;
-        }
-
-        private boolean isRightChild() {
-            return this == parent.right;
-        }
-
-        private Node<E> getGrandparent() {
-            return parent.parent;
-        }
-
-        private Node<E> getUncle() {
-            return isLeftChild() ? getGrandparent().right : getGrandparent().left;
-        }
-    }
-
+public class RedBlackTree<T extends Comparable<T>> implements Tree<T> {
     private Node<T> root;
-    private int size;
-
+    private int nodesCount;
 
     public void insert(T value) {
         Node<T> newNode = new Node<>(value, null);
-        if (isEmpty()) {
-            System.out.println("initialize");
-            initialize(newNode);
-        } else {
-            System.out.println("insert");
-            root = insert(root, newNode);
-            balance(newNode);
-        }
-
-        size++;
+        root = insert(root, newNode);
+        balance(newNode);
+        nodesCount++;
     }
 
     private void balance(Node<T> node) {
@@ -73,15 +16,12 @@ public class RedBlackTree<T extends Comparable<T>> {
         if (node != root && parent.isRed()) {
             Node<T> grandparent = node.getGrandparent();
             Node<T> uncle = node.getUncle();
-            System.out.println("balance");
 
             if (uncle != null && uncle.isRed()) {
                 recolor(parent, uncle, grandparent);
             } else if (parent.isRightChild()) {
-                System.out.println("isRightHeavy");
                 handleRightHeavy(node, parent, grandparent);
             } else if (parent.isLeftChild()) {
-                System.out.println("isLeftHeavy");
                 handleLeftHeavy(node, parent, grandparent);
             }
         }
@@ -166,7 +106,7 @@ public class RedBlackTree<T extends Comparable<T>> {
         }
 
         newNode.parent = root;
-        if (isSmaller(newNode.value, root.value)) {
+        if (newNode.isSmaller(root.value)) {
             root.left = insert(root.left, newNode);
         } else {
             root.right = insert(root.right, newNode);
@@ -175,20 +115,96 @@ public class RedBlackTree<T extends Comparable<T>> {
         return root;
     }
 
-    private void initialize(Node<T> node) {
-        root = node;
-        node.makeBlack();
-    }
-
-    private boolean isSmaller(T first, T second) {
-        return first.compareTo(second) < 0;
-    }
-
     public boolean isEmpty() {
         return root == null;
     }
 
-    public int size() {
-        return size;
+    @Override
+    public void delete(T value) {
+        root = delete(root, value);
+        nodesCount--;
+    }
+
+    private Node<T> delete(Node<T> root, T value) {
+        if (root == null) {
+            return null;
+        }
+
+        if (root.isSmaller(value)) {
+            root.right = delete(root.right, value);
+            if (root.right != null) {
+                root.right.parent = root;
+            }
+        } else if (root.isLarger(value)) {
+            root.left = delete(root.left, value);
+            if (root.left != null) {
+                root.left.parent = root;
+            }
+        } else {
+            // has one child or leaf node
+            if (root.left == null) return root.right;
+            else if (root.right == null) return root.left;
+
+            // two children
+            root.value = getMax(root.left).value;
+            root.left = delete(root.left, root.value);
+            if (root.left != null) {
+                root.left.parent = root;
+            }
+        }
+
+        balance(root);
+
+        return root;
+    }
+
+    @Override
+    public Node<T> find(T value) {
+        return null;
+    }
+
+    @Override
+    public void traverse() {
+        traverse(root);
+    }
+
+    private void traverse(Node<T> root) {
+        if (root == null) {
+            return;
+        }
+
+        traverse(root.left);
+        traverse(root.right);
+    }
+
+    @Override
+    public T getMax() {
+        return getMax(root).value;
+    }
+
+    private Node<T> getMax(Node<T> root) {
+        if (root.right == null) {
+            return root;
+        }
+
+        return getMax(root.right);
+    }
+
+    @Override
+    public T getMin() {
+        return getMin(root).value;
+    }
+
+    private Node<T> getMin(Node<T> root) {
+        if (root.left == null) {
+            return root;
+        }
+
+        return getMin(root.left);
+    }
+
+    @Override
+    public int nodesCount() {
+        return nodesCount;
     }
 }

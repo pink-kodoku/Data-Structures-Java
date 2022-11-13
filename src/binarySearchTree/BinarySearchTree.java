@@ -1,4 +1,4 @@
-package binaryTree;
+package binarySearchTree;
 
 public class BinarySearchTree<T extends Comparable<T>> {
     private class Node<E> {
