@@ -5,7 +5,7 @@ class Node<T extends Comparable<T>> {
     public Node<T> left;
     public Node<T> right;
     public Node<T> parent;
-    public boolean color = true;
+    public Color color = Color.RED;
 
     public Node(T value, Node<T> parent) {
         this.value = value;
@@ -13,23 +13,23 @@ class Node<T extends Comparable<T>> {
     }
 
     public boolean isRed() {
-        return color;
+        return color == Color.RED;
     }
 
     public boolean isBlack() {
-        return !color;
+        return color == Color.BLACK;
     }
 
     public void makeRed() {
-        color = true;
+        color = Color.RED;
     }
 
     public void makeBlack() {
-        color = false;
+        color = Color.BLACK;
     }
 
     public void flipColor() {
-        color = !color;
+        color = color == Color.RED ? Color.BLACK : Color.RED;
     }
 
     public boolean isLeftChild() {

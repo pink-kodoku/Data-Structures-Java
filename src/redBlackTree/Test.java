@@ -9,8 +9,6 @@ public class Test {
         tree.insert(10);
 
 
-        tree.delete(20);
-
         System.out.println("");
     }
 }
