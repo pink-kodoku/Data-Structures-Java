@@ -12,8 +12,7 @@ public class BTree<T extends Comparable<T>> {
     private Node<T> root = null;
     private int size = 0;
 
-    public BTree() {
-    }
+    public BTree() {}
 
     public BTree(int order) {
         minKeySize = order;
