@@ -96,7 +96,7 @@ public class WeightedGraph {
         while (!queue.isEmpty()) {
             Node current = queue.remove().node;
             visited.add(current);
-
+            System.out.println(current.value);
             for (var edge : current.getEdges()) {
                 if (visited.contains(edge.to)) {
                     continue;
@@ -109,7 +109,6 @@ public class WeightedGraph {
                 }
             }
         }
-
 
 
         return buildPath(toNode, previousNodes);
@@ -132,6 +131,33 @@ public class WeightedGraph {
 
         return path;
     }
+
+    public boolean hasCycle() {
+        Set<Node> visited = new HashSet<>();
+        for (var node : nodes.values()) {
+            if (!visited.contains(node) && hasCycle(node, null, visited)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean hasCycle(Node node, Node parent, Set<Node> visited) {
+        visited.add(node);
+
+        for (var edge : node.getEdges()) {
+            if (edge.to == parent) {
+                continue;
+            }
+            if (visited.contains(edge.to) || hasCycle(edge.to, node, visited)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     public void print() {
         for (var node : nodes.values()) {

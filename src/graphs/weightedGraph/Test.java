@@ -5,15 +5,19 @@ public class Test {
         WeightedGraph weightedGraph = new WeightedGraph();
 
         weightedGraph.addNode("a");
-        weightedGraph.addNode("b");
         weightedGraph.addNode("c");
+        weightedGraph.addNode("d");
+        weightedGraph.addNode("e");
+        weightedGraph.addNode("g");
 
-        weightedGraph.addEdge("a", "b", 1);
-        weightedGraph.addEdge("b", "c", 2);
-        weightedGraph.addEdge("a", "c", 10);
+        weightedGraph.addEdge("a", "c", 1);
+        weightedGraph.addEdge("c", "d", 1);
+        weightedGraph.addEdge("a", "e", 3);
+        weightedGraph.addEdge("a", "d", 8);
+        weightedGraph.addEdge("e", "g", 2);
+        weightedGraph.addEdge("d", "g", 3);
 
-        weightedGraph.print();
+        System.out.println(weightedGraph.getShortestPath("a", "d"));
 
-        System.out.println(weightedGraph.getShortestPath("a", "c"));
     }
 }
