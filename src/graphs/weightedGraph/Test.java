@@ -17,7 +17,7 @@ public class Test {
         weightedGraph.addEdge("e", "g", 2);
         weightedGraph.addEdge("d", "g", 3);
 
-        System.out.println(weightedGraph.getShortestPath("a", "d"));
+        weightedGraph.shortestPath("a", "d");
 
     }
 }

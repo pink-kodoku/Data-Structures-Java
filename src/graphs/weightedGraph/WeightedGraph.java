@@ -3,6 +3,49 @@ package graphs.weightedGraph;
 import java.util.*;
 
 public class WeightedGraph {
+
+    public void shortestPath(String from, String to) {
+        Node fromNode = nodes.get(from);
+        if (fromNode == null) {
+            throw new IllegalArgumentException();
+        }
+        Node toNode = nodes.get(to);
+        if (toNode == null) {
+            throw new IllegalArgumentException();
+        }
+
+        PriorityQueue<NodeEntry> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(ne -> ne.priority));
+        Set<Node> visited = new HashSet<>();
+        Map<Node, Integer> distances = new HashMap<>();
+        Map<Node, Node> prevNodes = new HashMap<>();
+
+        for (Node n : nodes.values()) {
+            distances.put(n, Integer.MAX_VALUE);
+        }
+
+        distances.put(fromNode, 0);
+
+        priorityQueue.add(new NodeEntry(fromNode, 0));
+
+        while (!priorityQueue.isEmpty()) {
+            NodeEntry current = priorityQueue.remove();
+            Node currentNode = current.node;
+            visited.add(currentNode);
+            for (Edge edge : currentNode.edges) {
+                if (!visited.contains(edge.to)) {
+                    int newDistance = distances.get(currentNode) + edge.weight;
+                    if (newDistance < distances.get(edge.to)) {
+                        distances.replace(edge.to, newDistance);
+                        prevNodes.put(edge.to, currentNode);
+                        priorityQueue.add(new NodeEntry(edge.to, newDistance));
+                    }
+                }
+            }
+        }
+
+        System.out.println(buildPath(toNode, prevNodes));
+    }
+
     private class Node {
         private String value;
         private List<Edge> edges = new ArrayList<>();
