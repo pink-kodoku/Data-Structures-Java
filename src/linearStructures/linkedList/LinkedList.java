@@ -228,6 +228,18 @@ public class LinkedList<T extends Comparable<T>> implements Iterable<T> {
         return -1;
     }
 
+    public T getMiddleValue() {
+        Node<T> slow = root;
+        Node<T> fast = root;
+
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow.value;
+    }
+
     protected boolean isEqual(T first, T second) {
         return first.compareTo(second) == 0;
     }

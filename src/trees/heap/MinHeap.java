@@ -27,10 +27,6 @@ public class MinHeap<T extends Comparable<T>> extends AbstractHeap<T> {
         }
     }
 
-    private int getSmallestChildIndex(int index) {
-        return isSmaller(leftChild(index), rightChild(index)) ? leftChildIndex(index) : rightChildIndex(index);
-    }
-
     private boolean isValidParent(int index) {
         if (!hasLeftChild(index)) {
             return true;
@@ -39,5 +35,15 @@ public class MinHeap<T extends Comparable<T>> extends AbstractHeap<T> {
         }
 
         return isSmaller(parent(index), rightChild(index)) && isSmaller(parent(index), leftChild(index));
+    }
+
+    public boolean isMinHeap(int[] heap) {
+        for (int i = 0; i < (heap.length - 2) / 2; i++) {
+            if (heap[i] > heap[2 * i + 1] || heap[i] > heap[2 * i + 2]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

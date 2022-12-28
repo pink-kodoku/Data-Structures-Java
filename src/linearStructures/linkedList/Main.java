@@ -2,11 +2,13 @@ package linearStructures.linkedList;
 
 public class Main {
     public static void main(String[] args) {
-        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        LinkedList<Integer> list = new LinkedList<>();
         list.addLast(1);
         list.addLast(2);
         list.addLast(3);
-        list.removeLast();
-        System.out.println("");
+        list.addLast(4);
+        list.addLast(5);
+
+        System.out.println(list.getMiddleValue());
     }
 }

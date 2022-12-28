@@ -25,10 +25,6 @@ public class MaxHeap<T extends Comparable<T>> extends AbstractHeap<T> {
         }
     }
 
-    private int getLargerItemIndex(int index) {
-        return isLarger(leftChild(index), rightChild(index)) ? leftChildIndex(index) : rightChildIndex(index);
-    }
-
     private boolean isValidParent(int index) {
         if (!hasLeftChild(index)) {
             return true;
@@ -38,5 +34,5 @@ public class MaxHeap<T extends Comparable<T>> extends AbstractHeap<T> {
 
         return isLarger(parent(index), rightChild(index)) && isLarger(parent(index), leftChild(index));
     }
-
 }
+

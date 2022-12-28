@@ -69,4 +69,12 @@ public abstract class AbstractHeap<T extends Comparable<T>> {
     protected int parentIndex(int index) {
         return (index - 1) / 2;
     }
+
+    protected int getSmallestChildIndex(int index) {
+        return isSmaller(leftChild(index), rightChild(index)) ? leftChildIndex(index) : rightChildIndex(index);
+    }
+
+    protected int getLargerItemIndex(int index) {
+        return isLarger(leftChild(index), rightChild(index)) ? leftChildIndex(index) : rightChildIndex(index);
+    }
 }
